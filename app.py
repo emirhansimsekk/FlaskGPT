@@ -4,49 +4,39 @@ import json
 import config
 from openai import OpenAI
 
-
-client = OpenAI(api_key=config.api_key)
+## ChatGPT confguration
+client = OpenAI(api_key=config.api_key) ## You must replace config.api_key with your own API Key
 messages = [ {"role": "system", "content":
               "You are a intelligent assistant."} ]
 
 app = Flask(__name__)
 
 
-@app.route('/endpoint/<param_value>')
+
+@app.route('/endpoint/<param_value>')## for request endpoint
 def hello_world(param_value):  # put application's code here
-    data = "hello world"
-    '''param_value = request.args.get('param_name')'''
+    ## create message based on received parameter
     message = str(param_value) + ".Ilan aciklamasi yaaz. Maksimum 300 karakter kullan. utf-8 ve json formatinda yolla. JSON disinda baska birsey dondurme!"
+    ## for debug
     print(message)
     if message:
         messages.append(
             {"role": "user", "content": message},
         )
         chat = client.chat.completions.create(
-            model="gpt-3.5-turbo", messages=messages
+            model="gpt-3.5-turbo", messages=messages ## send prompt to ChatGPT
         )
-    reply = chat.choices[0].message.content
+    reply = chat.choices[0].message.content ## ChatGPT's reply is here
     print(f"ChatGPT: {reply}")
     messages.append({"role": "assistant", "content": reply})
 
     '''print(jsonify({'data': reply}))'''
     print(type(reply))
-    return jsonify({'data': reply})
+    return jsonify({'data': reply}) ## post to server
 
 if __name__ == '__main__':
         app.run(host='0.0.0.0', port=4000, debug=True)
-'''while True:
-    message = input("User : ")
-    if message:
-        messages.append(
-            {"role": "user", "content": message},
-        )
-        chat = client.chat.completions.create(
-            model="gpt-3.5-turbo", messages=messages
-        )
-    reply = chat.choices[0].message.content
-    print(f"ChatGPT: {reply}")
-    messages.append({"role": "assistant", "content": reply})'''
+
 
 
 
