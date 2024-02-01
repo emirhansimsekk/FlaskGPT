@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 from flask import Flask, jsonify, request
 import json
-
+import config
 from openai import OpenAI
 
 
-client = OpenAI(api_key='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')
+client = OpenAI(api_key=config.api_key)
 messages = [ {"role": "system", "content":
               "You are a intelligent assistant."} ]
 
