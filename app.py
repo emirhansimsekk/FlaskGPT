@@ -30,12 +30,11 @@ def hello_world(param_value):  # put application's code here
     print(f"ChatGPT: {reply}")
     messages.append({"role": "assistant", "content": reply})
 
-    '''print(jsonify({'data': reply}))'''
     print(type(reply))
     return jsonify({'data': reply}) ## post to server
 
 if __name__ == '__main__':
-        app.run(host='0.0.0.0', port=4000, debug=True)
+        app.run(host='0.0.0.0', port=4000, debug=True) ## This is for start the server on your computer's IP address
 
 
 
